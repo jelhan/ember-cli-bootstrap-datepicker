@@ -25,7 +25,7 @@ export default Ember.Mixin.create({
         enableOnReadonly: this.get('enableOnReadonly'),
         endDate: this.get('endDate'),
         forceParse: this.get('forceParse'),
-        format: this.get('format'),
+        format: this.get('format') ? this.get('format').toString() : undefined,
         immediateUpdates: this.get('immediateUpdates'),
         keyboardNavigation: this.get('keyboardNavigation'),
         language: this.get('language') || undefined,
@@ -113,8 +113,9 @@ export default Ember.Mixin.create({
     });
 
     this.addObserver('format', function() {
-      this.$().datepicker('format', this.get('format'));
-      this.$().data('datepicker')._process_options({format: this.get('format')});
+      var format = this.get('format') ? this.get('format').toString() : undefined;
+      this.$().datepicker('format', format);
+      this.$().data('datepicker')._process_options({format: format});
       this._updateDatepicker();
     });
   }),
